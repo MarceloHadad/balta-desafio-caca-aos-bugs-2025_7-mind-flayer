@@ -1,0 +1,42 @@
+using BugStore.Application.Interfaces;
+using BugStore.Application.Repositories;
+using BugStore.Application.Responses.Customers;
+using BugStore.Application.UseCases.Customers.Search;
+
+namespace BugStore.Application.Handlers.Customers;
+
+public class GetCustomersHandler : IHandler<SearchCustomersRequest, GetCustomersResponse>
+{
+    private readonly ICustomerRepository _repository;
+
+    public GetCustomersHandler(ICustomerRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public async Task<GetCustomersResponse> HandleAsync(SearchCustomersRequest request)
+    {
+        var hasFilters =
+            !string.IsNullOrWhiteSpace(request.Name) ||
+            !string.IsNullOrWhiteSpace(request.Email) ||
+            !string.IsNullOrWhiteSpace(request.Phone);
+
+        var customers = hasFilters
+            ? await _repository.SearchAsync(request)
+            : await _repository.GetAllAsync();
+
+        var items = customers.Select(c => new GetByIdCustomerResponse
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Email = c.Email,
+            Phone = c.Phone,
+            BirthDate = c.BirthDate
+        }).ToList();
+
+        return new GetCustomersResponse
+        {
+            Customers = items
+        };
+    }
+}
