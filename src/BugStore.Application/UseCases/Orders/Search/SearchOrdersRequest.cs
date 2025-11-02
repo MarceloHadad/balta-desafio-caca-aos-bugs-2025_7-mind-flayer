@@ -18,4 +18,6 @@ public class SearchOrdersRequest
     public DateTime? CreatedAtEnd { get; set; }
     public DateTime? UpdatedAtStart { get; set; }
     public DateTime? UpdatedAtEnd { get; set; }
+    public int? PageNumber { get; set; }
+    public int? PageSize { get; set; }
 }

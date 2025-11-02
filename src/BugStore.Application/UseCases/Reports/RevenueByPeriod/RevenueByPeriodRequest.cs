@@ -10,4 +10,6 @@ public class RevenueByPeriodRequest
     public int? MaxOrders { get; set; }
     public decimal? MinRevenue { get; set; }
     public decimal? MaxRevenue { get; set; }
+    public int? PageNumber { get; set; } = 1;
+    public int? PageSize { get; set; } = 10;
 }
