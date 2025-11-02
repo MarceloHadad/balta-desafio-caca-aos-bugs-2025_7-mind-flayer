@@ -33,7 +33,7 @@ public class ReportRepository(AppDbContext context) : IReportRepository
             baseQuery = baseQuery.Where(x => EF.Functions.Like(x.CustomerEmail.ToLower(), $"%{value}%"));
         }
 
-        var groupedQuery = baseQuery
+        var groupedQuery = await baseQuery
             .GroupBy(x => new { x.CustomerId, x.CustomerName, x.CustomerEmail })
             .Select(g => new BestCustomersResponse
             {
@@ -42,37 +42,39 @@ public class ReportRepository(AppDbContext context) : IReportRepository
                 TotalOrders = g.Count(),
                 SpentAmount = g.Sum(x => x.OrderTotal)
             })
-            .AsQueryable();
+            .ToListAsync();
+
+        var items = groupedQuery.AsEnumerable();
 
         if (request.MinOrders.HasValue)
-            groupedQuery = groupedQuery.Where(i => i.TotalOrders >= request.MinOrders.Value);
+            items = items.Where(i => i.TotalOrders >= request.MinOrders.Value);
 
         if (request.MaxOrders.HasValue)
-            groupedQuery = groupedQuery.Where(i => i.TotalOrders <= request.MaxOrders.Value);
+            items = items.Where(i => i.TotalOrders <= request.MaxOrders.Value);
 
         if (request.MinSpent.HasValue)
-            groupedQuery = groupedQuery.Where(i => i.SpentAmount >= request.MinSpent.Value);
+            items = items.Where(i => i.SpentAmount >= request.MinSpent.Value);
 
         if (request.MaxSpent.HasValue)
-            groupedQuery = groupedQuery.Where(i => i.SpentAmount <= request.MaxSpent.Value);
+            items = items.Where(i => i.SpentAmount <= request.MaxSpent.Value);
 
         var orderBy = (request.OrderBy ?? "spentAmount").ToLowerInvariant();
         var direction = (request.OrderDirection ?? "desc").ToLowerInvariant();
 
         if (orderBy == "totalorders" || orderBy == "orders")
         {
-            groupedQuery = direction == "asc"
-                ? groupedQuery.OrderBy(i => i.TotalOrders)
-                : groupedQuery.OrderByDescending(i => i.TotalOrders);
+            items = direction == "asc"
+                ? items.OrderBy(i => i.TotalOrders)
+                : items.OrderByDescending(i => i.TotalOrders);
         }
         else
         {
-            groupedQuery = direction == "asc"
-                ? groupedQuery.OrderBy(i => i.SpentAmount)
-                : groupedQuery.OrderByDescending(i => i.SpentAmount);
+            items = direction == "asc"
+                ? items.OrderBy(i => i.SpentAmount)
+                : items.OrderByDescending(i => i.SpentAmount);
         }
 
-        return await groupedQuery.ToListAsync();
+        return items.ToList();
     }
 
     public async Task<IReadOnlyList<RevenueByPeriodResponse>> GetRevenueByPeriodAsync(RevenueByPeriodRequest request)
