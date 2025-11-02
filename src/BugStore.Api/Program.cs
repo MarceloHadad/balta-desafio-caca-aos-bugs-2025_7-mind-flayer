@@ -2,6 +2,7 @@ using BugStore.Api.Endpoints;
 using BugStore.Application.Handlers.Customers;
 using BugStore.Application.Handlers.Orders;
 using BugStore.Application.Handlers.Products;
+using BugStore.Application.Handlers.Reports;
 using BugStore.Application.Interfaces;
 using BugStore.Application.Repositories;
 using BugStore.Application.Requests.Customers;
@@ -10,9 +11,12 @@ using BugStore.Application.Requests.Products;
 using BugStore.Application.Responses.Customers;
 using BugStore.Application.Responses.Orders;
 using BugStore.Application.Responses.Products;
+using BugStore.Application.Responses.Reports;
 using BugStore.Application.UseCases.Customers.Search;
 using BugStore.Application.UseCases.Orders.Search;
 using BugStore.Application.UseCases.Products.Search;
+using BugStore.Application.UseCases.Reports.BestCustomers;
+using BugStore.Application.UseCases.Reports.RevenueByPeriod;
 using BugStore.Infrastructure.Data;
 using BugStore.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +30,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderLineRepository, OrderLineRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IHandler<CreateCustomerRequest, CreateCustomerResponse>, CreateCustomerHandler>();
@@ -43,6 +48,9 @@ builder.Services.AddScoped<IHandler<UpdateProductRequest, UpdateProductResponse>
 builder.Services.AddScoped<IHandler<CreateOrderRequest, CreateOrderResponse>, CreateOrderHandler>();
 builder.Services.AddScoped<IHandler<SearchOrdersRequest, GetOrdersResponse>, GetOrdersHandler>();
 builder.Services.AddScoped<IHandler<GetByIdOrderRequest, GetByIdOrderResponse>, GetByIdOrderHandler>();
+
+builder.Services.AddScoped<IHandler<BestCustomersRequest, GetBestCustomersResponse>, BestCustomersHandler>();
+builder.Services.AddScoped<IHandler<RevenueByPeriodRequest, GetRevenueByPeriodResponse>, RevenueByPeriodHandler>();
 
 var app = builder.Build();
 
@@ -72,5 +80,6 @@ app.Use(async (context, next) =>
 app.MapCustomersEndpoints();
 app.MapProductsEndpoints();
 app.MapOrdersEndpoints();
+app.MapReportsEndpoints();
 
 app.Run();
