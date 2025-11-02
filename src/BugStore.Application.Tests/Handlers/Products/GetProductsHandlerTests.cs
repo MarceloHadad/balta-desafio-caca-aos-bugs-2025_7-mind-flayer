@@ -45,7 +45,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -68,7 +68,7 @@ public class GetProductsHandlerTests
         var request = new SearchProductsRequest();
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(new List<Product>());
+            .ReturnsAsync(((IReadOnlyList<Product>)new List<Product>(), 0));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -98,7 +98,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -129,7 +129,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -160,7 +160,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -191,7 +191,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -222,7 +222,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .ReturnsAsync(((IReadOnlyList<Product>)products, products.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -261,7 +261,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .Returns(Task.FromResult(((IReadOnlyList<Product>)products, products.Count)));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -299,7 +299,7 @@ public class GetProductsHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(products);
+            .Returns(Task.FromResult(((IReadOnlyList<Product>)products, products.Count)));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -322,7 +322,7 @@ public class GetProductsHandlerTests
         var request = new SearchProductsRequest { Title = "NonExistent" };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchProductsRequest>()))
-            .ReturnsAsync(new List<Product>());
+            .ReturnsAsync(((IReadOnlyList<Product>)new List<Product>(), 0));
 
         // Act
         var response = await _handler.HandleAsync(request);

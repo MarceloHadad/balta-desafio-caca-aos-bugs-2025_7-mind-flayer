@@ -24,7 +24,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -49,7 +49,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -76,7 +76,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -103,7 +103,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -130,7 +130,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -157,7 +157,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -184,7 +184,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -211,7 +211,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -243,7 +243,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -271,7 +271,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -299,7 +299,7 @@ public class BestCustomersHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetBestCustomersAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);

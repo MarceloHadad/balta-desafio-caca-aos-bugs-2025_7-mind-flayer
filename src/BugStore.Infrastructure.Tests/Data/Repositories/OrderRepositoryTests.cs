@@ -142,10 +142,10 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(new SearchOrdersRequest());
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(o => o.Id == order1.Id);
-        result.Should().Contain(o => o.Id == order2.Id);
-        result.All(o => o.Customer != null).Should().BeTrue();
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(o => o.Id == order1.Id);
+        result.Items.Should().Contain(o => o.Id == order2.Id);
+        result.Items.All(o => o.Customer != null).Should().BeTrue();
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(new SearchOrdersRequest());
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -301,8 +301,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Id.Should().Be(order1.Id);
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Id.Should().Be(order1.Id);
     }
 
     [Fact]
@@ -332,8 +332,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Customer.Name.Should().Be("John Doe");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Customer.Name.Should().Be("John Doe");
     }
 
     [Fact]
@@ -363,8 +363,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Customer.Email.Should().Be("john@example.com");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Customer.Email.Should().Be("john@example.com");
     }
 
     [Fact]
@@ -397,8 +397,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Lines.First().Product.Title.Should().Contain("Laptop");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Lines.First().Product.Title.Should().Contain("Laptop");
     }
 
     [Fact]
@@ -432,8 +432,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Lines.First().Product.Price.Should().Be(2500m);
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Lines.First().Product.Price.Should().Be(2500m);
     }
 
     [Fact]
@@ -464,8 +464,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().CreatedAt.Should().Be(new DateTime(2025, 6, 15));
+        result.Items.Should().HaveCount(1);
+        result.Items.First().CreatedAt.Should().Be(new DateTime(2025, 6, 15));
     }
 
     [Fact]
@@ -496,8 +496,8 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().UpdatedAt.Should().Be(new DateTime(2025, 6, 15));
+        result.Items.Should().HaveCount(1);
+        result.Items.First().UpdatedAt.Should().Be(new DateTime(2025, 6, 15));
     }
 
     [Fact]
@@ -533,9 +533,9 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Customer.Name.Should().Be("John Doe");
-        result.First().Lines.First().Product.Title.Should().Contain("Laptop");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Customer.Name.Should().Be("John Doe");
+        result.Items.First().Lines.First().Product.Title.Should().Contain("Laptop");
     }
 
     [Fact]
@@ -563,7 +563,7 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -593,9 +593,9 @@ public class OrderRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(3);
-        result[0].CreatedAt.Should().Be(new DateTime(2025, 6, 1));
-        result[1].CreatedAt.Should().Be(new DateTime(2025, 3, 1));
-        result[2].CreatedAt.Should().Be(new DateTime(2025, 1, 1));
+        result.Items.Should().HaveCount(3);
+        result.Items[0].CreatedAt.Should().Be(new DateTime(2025, 6, 1));
+        result.Items[1].CreatedAt.Should().Be(new DateTime(2025, 3, 1));
+        result.Items[2].CreatedAt.Should().Be(new DateTime(2025, 1, 1));
     }
 }

@@ -54,7 +54,7 @@ public class CustomerRepository : ICustomerRepository
         tracked.BirthDate = customer.BirthDate;
     }
 
-    public async Task<IReadOnlyList<Customer>> SearchAsync(SearchCustomersRequest request)
+    public async Task<(IReadOnlyList<Customer> Items, int TotalCount)> SearchAsync(SearchCustomersRequest request)
     {
         var query = _context.Customers.AsNoTracking().AsQueryable();
 
@@ -76,8 +76,20 @@ public class CustomerRepository : ICustomerRepository
             query = query.Where(c => EF.Functions.Like(c.Phone.ToLower(), $"%{value}%"));
         }
 
-        query = query.OrderBy(c => c.Name);
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
 
-        return await query.ToListAsync();
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+        .OrderBy(c => c.Name)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (items, totalCount);
     }
 }

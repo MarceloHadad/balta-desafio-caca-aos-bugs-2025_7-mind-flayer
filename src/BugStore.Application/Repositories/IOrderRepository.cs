@@ -9,5 +9,5 @@ public interface IOrderRepository
     Task AddAsync(Order order);
     Task Update(Order order);
     Task Delete(Order order);
-    Task<IReadOnlyList<Order>> SearchAsync(SearchOrdersRequest request);
+    Task<(IReadOnlyList<Order> Items, int TotalCount)> SearchAsync(SearchOrdersRequest request);
 }

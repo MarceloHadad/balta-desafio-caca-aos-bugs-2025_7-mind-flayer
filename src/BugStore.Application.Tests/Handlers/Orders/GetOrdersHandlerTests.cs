@@ -64,7 +64,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -87,7 +87,7 @@ public class GetOrdersHandlerTests
         var request = new SearchOrdersRequest();
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(new List<Order>());
+            .ReturnsAsync(((IReadOnlyList<Order>)new List<Order>(), 0));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -145,7 +145,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -203,7 +203,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -261,7 +261,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -318,7 +318,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -376,7 +376,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -433,7 +433,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -494,7 +494,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .Returns(Task.FromResult(((IReadOnlyList<Order>)orders, orders.Count)));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -555,7 +555,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .Returns(Task.FromResult(((IReadOnlyList<Order>)orders, orders.Count)));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -620,7 +620,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .Returns(Task.FromResult(((IReadOnlyList<Order>)orders, orders.Count)));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -643,7 +643,7 @@ public class GetOrdersHandlerTests
         var request = new SearchOrdersRequest { CustomerName = "NonExistent" };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(new List<Order>());
+            .ReturnsAsync(((IReadOnlyList<Order>)new List<Order>(), 0));
 
         // Act
         var response = await _handler.HandleAsync(request);
@@ -716,7 +716,7 @@ public class GetOrdersHandlerTests
         };
 
         _repo.Setup(r => r.SearchAsync(It.IsAny<SearchOrdersRequest>()))
-            .ReturnsAsync(orders);
+            .ReturnsAsync(((IReadOnlyList<Order>)orders, orders.Count));
 
         // Act
         var response = await _handler.HandleAsync(request);

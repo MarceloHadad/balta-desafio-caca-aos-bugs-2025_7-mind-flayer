@@ -98,18 +98,18 @@ public class ReportRepositoryTests
         var request = new BestCustomersRequest();
 
         // Act
-        var result = await repository.GetBestCustomersAsync(request);
+        var (items, totalCount) = await repository.GetBestCustomersAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(2);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(2);
 
-        var customer1 = result.FirstOrDefault(c => c.CustomerName == "John Doe");
+        var customer1 = items.FirstOrDefault(c => c.CustomerName == "John Doe");
         customer1.Should().NotBeNull();
         customer1!.TotalOrders.Should().Be(3);
         customer1.SpentAmount.Should().Be(700m);
 
-        var customer2 = result.FirstOrDefault(c => c.CustomerName == "Jane Smith");
+        var customer2 = items.FirstOrDefault(c => c.CustomerName == "Jane Smith");
         customer2.Should().NotBeNull();
         customer2!.TotalOrders.Should().Be(2);
         customer2.SpentAmount.Should().Be(500m);
@@ -126,13 +126,13 @@ public class ReportRepositoryTests
         var request = new BestCustomersRequest { CustomerName = "John" };
 
         // Act
-        var result = await repository.GetBestCustomersAsync(request);
+        var (items, totalCount) = await repository.GetBestCustomersAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].CustomerName.Should().Be("John Doe");
-        result[0].TotalOrders.Should().Be(3);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].CustomerName.Should().Be("John Doe");
+        items[0].TotalOrders.Should().Be(3);
     }
 
     [Fact]
@@ -146,12 +146,12 @@ public class ReportRepositoryTests
         var request = new BestCustomersRequest { CustomerEmail = "jane@" };
 
         // Act
-        var result = await repository.GetBestCustomersAsync(request);
+        var (items, totalCount) = await repository.GetBestCustomersAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].CustomerName.Should().Be("Jane Smith");
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].CustomerName.Should().Be("Jane Smith");
     }
 
     [Fact]
@@ -165,12 +165,12 @@ public class ReportRepositoryTests
         var request = new BestCustomersRequest { MinOrders = 3 };
 
         // Act
-        var result = await repository.GetBestCustomersAsync(request);
+        var (items, totalCount) = await repository.GetBestCustomersAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].CustomerName.Should().Be("John Doe");
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].CustomerName.Should().Be("John Doe");
     }
 
     [Fact]
@@ -184,13 +184,13 @@ public class ReportRepositoryTests
         var request = new BestCustomersRequest { OrderBy = "spentAmount", OrderDirection = "desc" };
 
         // Act
-        var result = await repository.GetBestCustomersAsync(request);
+        var (items, totalCount) = await repository.GetBestCustomersAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(2);
-        result[0].SpentAmount.Should().Be(700m);
-        result[1].SpentAmount.Should().Be(500m);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(2);
+        items[0].SpentAmount.Should().Be(700m);
+        items[1].SpentAmount.Should().Be(500m);
     }
 
     [Fact]
@@ -204,18 +204,18 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest();
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(2);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(2);
 
-        var jan2024 = result.FirstOrDefault(r => r.Year == 2024 && r.Month == "January");
+        var jan2024 = items.FirstOrDefault(r => r.Year == 2024 && r.Month == "January");
         jan2024.Should().NotBeNull();
         jan2024!.TotalOrders.Should().Be(2);
         jan2024.TotalRevenue.Should().Be(400m);
 
-        var feb2024 = result.FirstOrDefault(r => r.Year == 2024 && r.Month == "February");
+        var feb2024 = items.FirstOrDefault(r => r.Year == 2024 && r.Month == "February");
         feb2024.Should().NotBeNull();
         feb2024!.TotalOrders.Should().Be(3);
         feb2024.TotalRevenue.Should().Be(800m);
@@ -232,13 +232,13 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest { StartPeriod = "2024-02" };
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].Year.Should().Be(2024);
-        result[0].Month.Should().Be("February");
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].Year.Should().Be(2024);
+        items[0].Month.Should().Be("February");
     }
 
     [Fact]
@@ -252,12 +252,12 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest { StartPeriod = "2024-02", EndPeriod = "2024-02" };
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].Month.Should().Be("February");
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].Month.Should().Be("February");
     }
 
     [Fact]
@@ -271,13 +271,13 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest { MinOrders = 3 };
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(1);
-        result[0].Month.Should().Be("February");
-        result[0].TotalOrders.Should().Be(3);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(1);
+        items[0].Month.Should().Be("February");
+        items[0].TotalOrders.Should().Be(3);
     }
 
     [Fact]
@@ -291,13 +291,13 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest { OrderBy = "date", OrderDirection = "asc" };
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(2);
-        result[0].Month.Should().Be("January");
-        result[1].Month.Should().Be("February");
+        items.Should().NotBeNull();
+        items.Should().HaveCount(2);
+        items[0].Month.Should().Be("January");
+        items[1].Month.Should().Be("February");
     }
 
     [Fact]
@@ -311,10 +311,10 @@ public class ReportRepositoryTests
         var request = new RevenueByPeriodRequest { StartPeriod = "invalid-format" };
 
         // Act
-        var result = await repository.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await repository.GetRevenueByPeriodAsync(request);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().HaveCount(2);
+        items.Should().NotBeNull();
+        items.Should().HaveCount(2);
     }
 }

@@ -56,7 +56,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
         tracked.Price = product.Price;
     }
 
-    public async Task<IReadOnlyList<Product>> SearchAsync(SearchProductsRequest request)
+    public async Task<(IReadOnlyList<Product> Items, int TotalCount)> SearchAsync(SearchProductsRequest request)
     {
         var query = _context.Products.AsNoTracking().AsQueryable();
 
@@ -88,8 +88,20 @@ public class ProductRepository(AppDbContext context) : IProductRepository
             query = query.Where(p => p.Price <= request.MaxPrice.Value);
         }
 
-        query = query.OrderBy(p => p.Title);
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
 
-        return await query.ToListAsync();
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderBy(p => p.Title)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 }

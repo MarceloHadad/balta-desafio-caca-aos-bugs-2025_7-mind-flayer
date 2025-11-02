@@ -10,5 +10,5 @@ public interface ICustomerRepository
     Task<Customer> AddAsync(Customer customer);
     Task UpdateAsync(Customer customer);
     Task DeleteAsync(Guid id);
-    Task<IReadOnlyList<Customer>> SearchAsync(SearchCustomersRequest request);
+    Task<(IReadOnlyList<Customer> Items, int TotalCount)> SearchAsync(SearchCustomersRequest request);
 }

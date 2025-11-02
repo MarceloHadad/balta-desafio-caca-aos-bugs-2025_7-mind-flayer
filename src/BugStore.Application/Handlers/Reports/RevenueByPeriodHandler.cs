@@ -11,10 +11,18 @@ public class RevenueByPeriodHandler(IReportRepository reports) : IHandler<Revenu
 
     public async Task<GetRevenueByPeriodResponse> HandleAsync(RevenueByPeriodRequest request)
     {
-        var items = await _reports.GetRevenueByPeriodAsync(request);
+        var (items, totalCount) = await _reports.GetRevenueByPeriodAsync(request);
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
         return new GetRevenueByPeriodResponse
         {
-            Items = items.ToList()
+            Items = items.ToList(),
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalCount = totalCount
         };
     }
 }

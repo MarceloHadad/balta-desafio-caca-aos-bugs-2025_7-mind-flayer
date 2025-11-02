@@ -24,7 +24,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -49,7 +49,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -77,7 +77,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -105,7 +105,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -133,7 +133,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -161,7 +161,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -189,7 +189,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -217,7 +217,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -245,7 +245,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -279,7 +279,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -307,7 +307,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);
@@ -335,7 +335,7 @@ public class RevenueByPeriodHandlerTests
 
         mockRepository
             .Setup(repo => repo.GetRevenueByPeriodAsync(request))
-            .ReturnsAsync(expectedData);
+            .ReturnsAsync((expectedData, expectedData.Count));
 
         // Act
         var result = await handler.HandleAsync(request);

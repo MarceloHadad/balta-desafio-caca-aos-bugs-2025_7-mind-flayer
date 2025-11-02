@@ -136,10 +136,10 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(new SearchCustomersRequest());
 
         // Assert
-        result.Should().HaveCount(3);
-        result[0].Name.Should().Be("Alice Brown");
-        result[1].Name.Should().Be("Mike Carter");
-        result[2].Name.Should().Be("Zoe Adams");
+        result.Items.Should().HaveCount(3);
+        result.Items[0].Name.Should().Be("Alice Brown");
+        result.Items[1].Name.Should().Be("Mike Carter");
+        result.Items[2].Name.Should().Be("Zoe Adams");
     }
 
     [Fact]
@@ -153,7 +153,7 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(new SearchCustomersRequest());
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -283,9 +283,9 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(c => c.Name == "John Doe");
-        result.Should().Contain(c => c.Name == "Bob Johnson");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(c => c.Name == "John Doe");
+        result.Items.Should().Contain(c => c.Name == "Bob Johnson");
     }
 
     [Fact]
@@ -312,9 +312,9 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(c => c.Email == "john@example.com");
-        result.Should().Contain(c => c.Email == "bob@example.com");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(c => c.Email == "john@example.com");
+        result.Items.Should().Contain(c => c.Email == "bob@example.com");
     }
 
     [Fact]
@@ -341,9 +341,9 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(c => c.Phone == "+55 11 99999-0001");
-        result.Should().Contain(c => c.Phone == "+55 11 99999-0003");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(c => c.Phone == "+55 11 99999-0001");
+        result.Items.Should().Contain(c => c.Phone == "+55 11 99999-0003");
     }
 
     [Fact]
@@ -371,8 +371,8 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Name.Should().Be("John Doe");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Name.Should().Be("John Doe");
     }
 
     [Fact]
@@ -398,7 +398,7 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -425,9 +425,9 @@ public class CustomerRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(3);
-        result[0].Name.Should().Be("Alice Brown");
-        result[1].Name.Should().Be("Mike Carter");
-        result[2].Name.Should().Be("Zoe Adams");
+        result.Items.Should().HaveCount(3);
+        result.Items[0].Name.Should().Be("Alice Brown");
+        result.Items[1].Name.Should().Be("Mike Carter");
+        result.Items[2].Name.Should().Be("Zoe Adams");
     }
 }

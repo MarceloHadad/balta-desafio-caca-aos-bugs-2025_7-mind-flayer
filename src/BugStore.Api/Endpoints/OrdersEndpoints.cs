@@ -30,6 +30,15 @@ public static class OrdersEndpoints
                 });
             }
 
+            if (request.PageNumber.HasValue && request.PageNumber.Value < 1)
+            {
+                return Results.BadRequest(new { error = "Invalid pagination: PageNumber must be >= 1.", pageNumber = request.PageNumber });
+            }
+            if (request.PageSize.HasValue && (request.PageSize.Value < 1 || request.PageSize.Value > 100))
+            {
+                return Results.BadRequest(new { error = "Invalid pagination: PageSize must be between 1 and 100.", pageSize = request.PageSize });
+            }
+
             var response = await handler.HandleAsync(request);
             return Results.Ok(response);
         });

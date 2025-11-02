@@ -11,5 +11,5 @@ public interface IProductRepository
     Task<Product> AddAsync(Product product);
     Task UpdateAsync(Product product);
     Task DeleteAsync(Guid id);
-    Task<IReadOnlyList<Product>> SearchAsync(SearchProductsRequest request);
+    Task<(IReadOnlyList<Product> Items, int TotalCount)> SearchAsync(SearchProductsRequest request);
 }

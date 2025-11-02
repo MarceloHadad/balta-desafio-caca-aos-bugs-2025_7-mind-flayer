@@ -16,7 +16,7 @@ public class GetCustomersHandler : IHandler<SearchCustomersRequest, GetCustomers
 
     public async Task<GetCustomersResponse> HandleAsync(SearchCustomersRequest request)
     {
-        var customers = await _repository.SearchAsync(request);
+        var (customers, totalCount) = await _repository.SearchAsync(request);
 
         var items = customers.Select(c => new GetByIdCustomerResponse
         {
@@ -29,7 +29,10 @@ public class GetCustomersHandler : IHandler<SearchCustomersRequest, GetCustomers
 
         return new GetCustomersResponse
         {
-            Customers = items
+            Customers = items,
+            PageNumber = request.PageNumber ?? 1,
+            PageSize = request.PageSize ?? 10,
+            TotalCount = totalCount
         };
     }
 }

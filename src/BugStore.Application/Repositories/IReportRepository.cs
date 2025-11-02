@@ -5,6 +5,6 @@ namespace BugStore.Application.Repositories;
 
 public interface IReportRepository
 {
-    Task<IReadOnlyList<BestCustomersResponse>> GetBestCustomersAsync(BestCustomersRequest request);
-    Task<IReadOnlyList<RevenueByPeriodResponse>> GetRevenueByPeriodAsync(RevenueByPeriodRequest request);
+    Task<(IReadOnlyList<BestCustomersResponse> Items, int TotalCount)> GetBestCustomersAsync(BestCustomersRequest request);
+    Task<(IReadOnlyList<RevenueByPeriodResponse> Items, int TotalCount)> GetRevenueByPeriodAsync(RevenueByPeriodRequest request);
 }

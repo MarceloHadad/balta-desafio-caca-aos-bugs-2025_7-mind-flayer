@@ -11,10 +11,18 @@ public class BestCustomersHandler(IReportRepository reports) : IHandler<BestCust
 
     public async Task<GetBestCustomersResponse> HandleAsync(BestCustomersRequest request)
     {
-        var items = await _reports.GetBestCustomersAsync(request);
+        var (items, totalCount) = await _reports.GetBestCustomersAsync(request);
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
         return new GetBestCustomersResponse
         {
-            Customers = items.ToList()
+            Customers = items.ToList(),
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalCount = totalCount
         };
     }
 }

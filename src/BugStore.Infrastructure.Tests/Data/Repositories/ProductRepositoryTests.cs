@@ -173,10 +173,10 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(new SearchProductsRequest());
 
         // Assert
-        result.Should().HaveCount(3);
-        result[0].Title.Should().Be("Alpha Product");
-        result[1].Title.Should().Be("Beta Product");
-        result[2].Title.Should().Be("Zebra Product");
+        result.Items.Should().HaveCount(3);
+        result.Items[0].Title.Should().Be("Alpha Product");
+        result.Items[1].Title.Should().Be("Beta Product");
+        result.Items[2].Title.Should().Be("Zebra Product");
     }
 
     [Fact]
@@ -190,7 +190,7 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(new SearchProductsRequest());
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -320,9 +320,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Title == "Gaming Laptop");
-        result.Should().Contain(p => p.Title == "Gaming Mouse");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Title == "Gaming Laptop");
+        result.Items.Should().Contain(p => p.Title == "Gaming Mouse");
     }
 
     [Fact]
@@ -349,9 +349,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Description == "High-end equipment");
-        result.Should().Contain(p => p.Description == "High-end performance");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Description == "High-end equipment");
+        result.Items.Should().Contain(p => p.Description == "High-end performance");
     }
 
     [Fact]
@@ -378,9 +378,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Slug == "laptop-gaming");
-        result.Should().Contain(p => p.Slug == "laptop-office");
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Slug == "laptop-gaming");
+        result.Items.Should().Contain(p => p.Slug == "laptop-office");
     }
 
     [Fact]
@@ -407,9 +407,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Price == 500m);
-        result.Should().Contain(p => p.Price == 2000m);
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Price == 500m);
+        result.Items.Should().Contain(p => p.Price == 2000m);
     }
 
     [Fact]
@@ -436,9 +436,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Price == 50m);
-        result.Should().Contain(p => p.Price == 500m);
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Price == 50m);
+        result.Items.Should().Contain(p => p.Price == 500m);
     }
 
     [Fact]
@@ -467,9 +467,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(p => p.Price == 150m);
-        result.Should().Contain(p => p.Price == 500m);
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(p => p.Price == 150m);
+        result.Items.Should().Contain(p => p.Price == 500m);
     }
 
     [Fact]
@@ -498,8 +498,8 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(1);
-        result.First().Title.Should().Be("Gaming Laptop");
+        result.Items.Should().HaveCount(1);
+        result.Items.First().Title.Should().Be("Gaming Laptop");
     }
 
     [Fact]
@@ -525,7 +525,7 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().BeEmpty();
+        result.Items.Should().BeEmpty();
     }
 
     [Fact]
@@ -552,9 +552,9 @@ public class ProductRepositoryTests
         var result = await repository.SearchAsync(request);
 
         // Assert
-        result.Should().HaveCount(3);
-        result[0].Title.Should().Be("Alpha Product");
-        result[1].Title.Should().Be("Beta Product");
-        result[2].Title.Should().Be("Zebra Product");
+        result.Items.Should().HaveCount(3);
+        result.Items[0].Title.Should().Be("Alpha Product");
+        result.Items[1].Title.Should().Be("Beta Product");
+        result.Items[2].Title.Should().Be("Zebra Product");
     }
 }

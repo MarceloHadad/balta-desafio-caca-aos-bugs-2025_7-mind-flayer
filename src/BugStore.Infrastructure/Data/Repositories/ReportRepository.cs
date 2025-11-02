@@ -10,7 +10,7 @@ public class ReportRepository(AppDbContext context) : IReportRepository
 {
     private readonly AppDbContext _context = context;
 
-    public async Task<IReadOnlyList<BestCustomersResponse>> GetBestCustomersAsync(BestCustomersRequest request)
+    public async Task<(IReadOnlyList<BestCustomersResponse> Items, int TotalCount)> GetBestCustomersAsync(BestCustomersRequest request)
     {
         var baseQuery = _context.Orders
             .AsNoTracking()
@@ -74,10 +74,22 @@ public class ReportRepository(AppDbContext context) : IReportRepository
                 : items.OrderByDescending(i => i.SpentAmount);
         }
 
-        return items.ToList();
+        var totalCount = items.Count();
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
+
+        var paginatedItems = items
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        return (paginatedItems, totalCount);
     }
 
-    public async Task<IReadOnlyList<RevenueByPeriodResponse>> GetRevenueByPeriodAsync(RevenueByPeriodRequest request)
+    public async Task<(IReadOnlyList<RevenueByPeriodResponse> Items, int TotalCount)> GetRevenueByPeriodAsync(RevenueByPeriodRequest request)
     {
         var baseQuery = _context.Orders
             .AsNoTracking()
@@ -156,7 +168,16 @@ public class ReportRepository(AppDbContext context) : IReportRepository
                 : items.OrderBy(i => i.Year).ThenBy(i => i.MonthNumber);
         }
 
+        var totalCount = items.Count();
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
+
         var result = items
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .Select(i => new RevenueByPeriodResponse
             {
                 Year = i.Year,
@@ -166,7 +187,7 @@ public class ReportRepository(AppDbContext context) : IReportRepository
             })
             .ToList();
 
-        return result;
+        return (result, totalCount);
     }
 
     private static bool TryParsePeriod(string period, out int year, out int month)

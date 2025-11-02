@@ -15,6 +15,16 @@ public static class ReportsEndpoints
 
         group.MapGet("/best-customers", async ([AsParameters] BestCustomersRequest request, [FromServices] IHandler<BestCustomersRequest, GetBestCustomersResponse> handler) =>
         {
+            if (request.PageNumber < 1 || request.PageSize < 1 || request.PageSize > 100)
+            {
+                return Results.BadRequest(new
+                {
+                    error = "Invalid pagination parameters. PageNumber must be >= 1 and PageSize must be between 1 and 100.",
+                    pageNumber = request.PageNumber,
+                    pageSize = request.PageSize
+                });
+            }
+
             var invalidOrdersRange = request.MinOrders.HasValue && request.MaxOrders.HasValue && request.MinOrders.Value > request.MaxOrders.Value;
             var invalidSpentRange = request.MinSpent.HasValue && request.MaxSpent.HasValue && request.MinSpent.Value > request.MaxSpent.Value;
 
@@ -34,6 +44,16 @@ public static class ReportsEndpoints
 
         group.MapGet("/revenue-by-period", async ([AsParameters] RevenueByPeriodRequest request, [FromServices] IHandler<RevenueByPeriodRequest, GetRevenueByPeriodResponse> handler) =>
         {
+            if (request.PageNumber < 1 || request.PageSize < 1 || request.PageSize > 100)
+            {
+                return Results.BadRequest(new
+                {
+                    error = "Invalid pagination parameters. PageNumber must be >= 1 and PageSize must be between 1 and 100.",
+                    pageNumber = request.PageNumber,
+                    pageSize = request.PageSize
+                });
+            }
+
             static bool TryParsePeriod(string? period, out int year, out int month)
             {
                 year = 0; month = 0;

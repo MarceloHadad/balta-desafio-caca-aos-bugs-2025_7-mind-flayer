@@ -44,7 +44,7 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
         _context.Orders.Remove(entity);
     }
 
-    public async Task<IReadOnlyList<Order>> SearchAsync(SearchOrdersRequest request)
+    public async Task<(IReadOnlyList<Order> Items, int TotalCount)> SearchAsync(SearchOrdersRequest request)
     {
         var query = _context.Orders
             .AsNoTracking()
@@ -54,9 +54,7 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
             .AsQueryable();
 
         if (request.Id.HasValue)
-        {
             query = query.Where(o => o.Id == request.Id.Value);
-        }
 
         if (!string.IsNullOrWhiteSpace(request.CustomerName))
         {
@@ -95,37 +93,37 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
         }
 
         if (request.ProductPriceStart.HasValue)
-        {
             query = query.Where(o => o.Lines.Any(l => l.Product.Price >= request.ProductPriceStart.Value));
-        }
 
         if (request.ProductPriceEnd.HasValue)
-        {
             query = query.Where(o => o.Lines.Any(l => l.Product.Price <= request.ProductPriceEnd.Value));
-        }
 
         if (request.CreatedAtStart.HasValue)
-        {
             query = query.Where(o => o.CreatedAt >= request.CreatedAtStart.Value);
-        }
 
         if (request.CreatedAtEnd.HasValue)
-        {
             query = query.Where(o => o.CreatedAt <= request.CreatedAtEnd.Value);
-        }
 
         if (request.UpdatedAtStart.HasValue)
-        {
             query = query.Where(o => o.UpdatedAt >= request.UpdatedAtStart.Value);
-        }
 
         if (request.UpdatedAtEnd.HasValue)
-        {
             query = query.Where(o => o.UpdatedAt <= request.UpdatedAtEnd.Value);
-        }
 
-        query = query.OrderByDescending(o => o.CreatedAt);
+        var pageNumber = (request.PageNumber ?? 1);
+        if (pageNumber < 1) pageNumber = 1;
+        var pageSize = (request.PageSize ?? 10);
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
 
-        return await query.ToListAsync();
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderByDescending(o => o.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 }

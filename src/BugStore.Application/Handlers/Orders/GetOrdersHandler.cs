@@ -16,7 +16,7 @@ public class GetOrdersHandler : IHandler<SearchOrdersRequest, GetOrdersResponse>
 
     public async Task<GetOrdersResponse> HandleAsync(SearchOrdersRequest request)
     {
-        var orders = await _repository.SearchAsync(request);
+        var (orders, totalCount) = await _repository.SearchAsync(request);
 
         var items = orders.Select(o => new GetByIdOrderResponse
         {
@@ -39,7 +39,10 @@ public class GetOrdersHandler : IHandler<SearchOrdersRequest, GetOrdersResponse>
 
         return new GetOrdersResponse
         {
-            Orders = items
+            Orders = items,
+            PageNumber = request.PageNumber ?? 1,
+            PageSize = request.PageSize ?? 10,
+            TotalCount = totalCount
         };
     }
 }
